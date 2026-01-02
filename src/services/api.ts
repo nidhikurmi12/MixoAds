@@ -3,17 +3,27 @@ import {
   CampaignResponse,
   CampaignInsightsResponse,
   OverallInsightsResponse,
-  CampaignInsights
+  CampaignInsights,
 } from '../types/campaign';
+import axios from 'axios';
 
-const BASE_URL = 'https://mixo-fe-backend-task.vercel.app';
+const BASE_URL = (import.meta.env.VITE_BASE_URL as string) || 'https://mixo-fe-backend-task.vercel.app';
+
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+});
 
 async function fetchAPI<T>(endpoint: string): Promise<T> {
-  const response = await fetch(`${BASE_URL}${endpoint}`);
-  if (!response.ok) {
-    throw new Error(`API Error: ${response.statusText}`);
+  try {
+    const response = await axiosInstance.get<T>(endpoint);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(`API Error: ${error.response.status} ${error.response.statusText}`);
+    }
+    throw error;
   }
-  return response.json();
 }
 
 export async function getCampaigns(): Promise<CampaignsResponse> {

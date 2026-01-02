@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TrendingUp, MousePointerClick, Target, DollarSign, BarChart3, Activity } from 'lucide-react';
+import { Target, DollarSign, BarChart3, Activity } from 'lucide-react';
 import { getOverallInsights } from '../services/api';
 import { OverallInsights } from '../types/campaign';
 import MetricCard from '../components/MetricCard';
@@ -49,12 +49,7 @@ export default function Dashboard() {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
   };
 
-  const calculateProgress = (value: number, max: number) => {
-    return Math.min((value / max) * 100, 100);
-  };
 
-  const avgCtrProgress = insights.avg_ctr;
-  const conversionProgress = insights.avg_conversion_rate;
   const activeRatio = insights.total_campaigns > 0
     ? (insights.active_campaigns / insights.total_campaigns) * 100
     : 0;
