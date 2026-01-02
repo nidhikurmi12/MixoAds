@@ -39,9 +39,7 @@ export const streamCampaignInsights = (
   onError?: (error: Error) => void
 ): (() => void) => {
   const baseURL =
-    (import.meta.env.VITE_BASE_URL as string) ||
-    "https://mixo-fe-backend-task.vercel.app";
-
+    import.meta.env.VITE_BASE_URL as string
   const eventSource = new EventSource(
     `${baseURL}/campaigns/${campaignId}/insights/stream`
   );

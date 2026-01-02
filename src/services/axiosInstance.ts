@@ -1,8 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
 
-const BASE_URL =
-  (import.meta.env.VITE_BASE_URL as string) ||
-  "https://mixo-fe-backend-task.vercel.app";
+const BASE_URL =import.meta.env.VITE_BASE_URL as string
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
