@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { getCampaigns } from '../services/api';
 import { Campaign } from '../types/campaign';
@@ -6,11 +7,7 @@ import StatusBadge from '../components/StatusBadge';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 
-interface CampaignsProps {
-  onSelectCampaign: (id: string) => void;
-}
-
-export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
+export default function Campaigns() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
@@ -54,6 +51,8 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
 
     setFilteredCampaigns(filtered);
   }, [searchTerm, statusFilter, campaigns]);
+
+  const navigate = useNavigate();
 
   if (loading) {
     return <LoadingSpinner />;
@@ -128,7 +127,7 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
               {filteredCampaigns.map((campaign) => (
                 <tr
                   key={campaign.id}
-                  onClick={() => onSelectCampaign(campaign.id)}
+                  onClick={() => navigate(`/campaigns/${campaign.id}`)}
                   className="hover:bg-gray-50 cursor-pointer transition-colors"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, TrendingUp, MousePointerClick, Target, DollarSign, Radio } from 'lucide-react';
 import { getCampaign, getCampaignInsights, streamCampaignInsights } from '../services/api';
 import { Campaign, CampaignInsights } from '../types/campaign';
@@ -7,12 +8,10 @@ import StatusBadge from '../components/StatusBadge';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorMessage from '../components/ErrorMessage';
 
-interface CampaignDetailProps {
-  campaignId: string;
-  onBack: () => void;
-}
-
-export default function CampaignDetail({ campaignId, onBack }: CampaignDetailProps) {
+export default function CampaignDetail() {
+  const params = useParams();
+  const navigate = useNavigate();
+  const campaignId = params.id as string;
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [insights, setInsights] = useState<CampaignInsights | null>(null);
   const [loading, setLoading] = useState(true);
@@ -81,7 +80,7 @@ export default function CampaignDetail({ campaignId, onBack }: CampaignDetailPro
   return (
     <div>
       <button
-        onClick={onBack}
+        onClick={() => navigate('/campaigns')}
         className="flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors"
       >
         <ArrowLeft className="w-5 h-5 mr-2" />
