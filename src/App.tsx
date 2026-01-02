@@ -1,52 +1,41 @@
-import { useState } from 'react';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Campaigns from './pages/Campaigns';
 import CampaignDetail from './pages/CampaignDetail';
+import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 
-type View = 'dashboard' | 'campaigns' | 'campaign-detail';
+type NavView = 'dashboard' | 'campaigns';
 
-function App() {
-  const [currentView, setCurrentView] = useState<View>('dashboard');
-  const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(null);
+function CampaignDetailWrapper({ onBack }: { onBack: () => void }) {
+  const { id } = useParams();
+  if (!id) return null;
+  return <CampaignDetail campaignId={id} onBack={onBack} />;
+}
 
-  const handleNavigate = (view: 'dashboard' | 'campaigns') => {
-    setCurrentView(view);
-    setSelectedCampaignId(null);
+export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const onNavigate = (view: NavView) => {
+    if (view === 'dashboard') navigate('/');
+    else navigate('/campaigns');
   };
 
-  const handleSelectCampaign = (id: string) => {
-    setSelectedCampaignId(id);
-    setCurrentView('campaign-detail');
+  const onSelectCampaign = (id: string) => {
+    navigate(`/campaigns/${id}`);
   };
 
-  const handleBackToCampaigns = () => {
-    setCurrentView('campaigns');
-    setSelectedCampaignId(null);
-  };
+  const onBackToCampaigns = () => navigate('/campaigns');
 
-  const renderContent = () => {
-    switch (currentView) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'campaigns':
-        return <Campaigns onSelectCampaign={handleSelectCampaign} />;
-      case 'campaign-detail':
-        return selectedCampaignId ? (
-          <CampaignDetail campaignId={selectedCampaignId} onBack={handleBackToCampaigns} />
-        ) : null;
-      default:
-        return <Dashboard />;
-    }
-  };
-
-  const layoutView = currentView === 'campaign-detail' ? 'campaigns' : currentView;
+  const layoutView: NavView = location.pathname.startsWith('/campaigns') ? 'campaigns' : 'dashboard';
 
   return (
-    <Layout currentView={layoutView} onNavigate={handleNavigate}>
-      {renderContent()}
+    <Layout currentView={layoutView} onNavigate={onNavigate}>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/campaigns" element={<Campaigns onSelectCampaign={onSelectCampaign} />} />
+        <Route path="/campaigns/:id" element={<CampaignDetailWrapper onBack={onBackToCampaigns} />} />
+      </Routes>
     </Layout>
   );
 }
-
-export default App;
