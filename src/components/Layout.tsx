@@ -4,7 +4,6 @@ import {
   Search,
   Bell,
   Settings,
-  Grid3x3,
   Menu,
   X,
 } from "lucide-react";
@@ -100,15 +99,7 @@ export default function Layout({
                 Campaigns
               </button>
 
-              <div className="pt-6">
-                <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                  Views
-                </p>
-                <button className="w-full flex items-center px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
-                  <Grid3x3 className="w-5 h-5 mr-3" />
-                  Analytics
-                </button>
-              </div>
+             
             </nav>
           </div>
         </aside>
