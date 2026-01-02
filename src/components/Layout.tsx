@@ -26,7 +26,7 @@ export default function Layout({
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="flex h-screen overflow-hidden">
-        {/* 🔲 Mobile Overlay */}
+        {/* Mobile Overlay */}
         {sidebarOpen && (
           <div
             onClick={() => setSidebarOpen(false)}
@@ -34,7 +34,7 @@ export default function Layout({
           />
         )}
 
-        {/* 📌 Sidebar */}
+        {/* Sidebar */}
         <aside
           className={`fixed lg:static z-50 h-full bg-white border-r border-gray-200
           transform transition-all duration-300
@@ -53,7 +53,7 @@ export default function Layout({
                 </span>
               </div>
 
-              {/* ❌ Close button (mobile) */}
+              {/* Close button (mobile) */}
               <button
                 onClick={() => setSidebarOpen(false)}
                 className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
@@ -113,13 +113,13 @@ export default function Layout({
           </div>
         </aside>
 
-        {/* 🧱 Main Content */}
+        {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Header */}
           <header className="bg-white border-b border-gray-200 px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                {/* 🍔 Mobile Menu Button */}
+                {/* Mobile Menu Button */}
                 <button
                   onClick={() => setSidebarOpen(true)}
                   className="lg:hidden p-2 rounded-lg hover:bg-gray-100"

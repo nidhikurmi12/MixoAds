@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, TrendingUp, MousePointerClick, Target, DollarSign, Radio } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { TrendingUp, MousePointerClick, Target, DollarSign, Radio } from 'lucide-react';
 import { getCampaign, getCampaignInsights, streamCampaignInsights } from '../services/api';
 import { Campaign, CampaignInsights } from '../types/campaign';
 import MetricCard from '../components/MetricCard';
@@ -9,10 +10,9 @@ import ErrorMessage from '../components/ErrorMessage';
 
 interface CampaignDetailProps {
   campaignId: string;
-  onBack: () => void;
 }
 
-export default function CampaignDetail({ campaignId, onBack }: CampaignDetailProps) {
+export default function CampaignDetail({ campaignId }: CampaignDetailProps) {
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [insights, setInsights] = useState<CampaignInsights | null>(null);
   const [loading, setLoading] = useState(true);
@@ -80,13 +80,13 @@ export default function CampaignDetail({ campaignId, onBack }: CampaignDetailPro
 
   return (
     <div>
-      <button
-        onClick={onBack}
+      <Link
+        to="/campaigns"
         className="flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors hover:gap-3 gap-2"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <span>←</span>
         Back to Campaigns
-      </button>
+      </Link>
 
       <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

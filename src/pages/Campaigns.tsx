@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Search } from 'lucide-react';
-import { getCampaigns } from '../services/api';
-import { Campaign } from '../types/campaign';
-import StatusBadge from '../components/StatusBadge';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorMessage from '../components/ErrorMessage';
+import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
+import { getCampaigns } from "../services/api";
+import { Campaign } from "../types/campaign";
+import StatusBadge from "../components/StatusBadge";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorMessage from "../components/ErrorMessage";
 
 interface CampaignsProps {
   onSelectCampaign: (id: string) => void;
@@ -15,8 +15,8 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
   const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
 
   const fetchCampaigns = async () => {
     try {
@@ -26,7 +26,7 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
       setCampaigns(response.campaigns);
       setFilteredCampaigns(response.campaigns);
     } catch (err) {
-      setError('Failed to load campaigns. Please try again.');
+      setError("Failed to load campaigns. Please try again.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -48,8 +48,10 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
       );
     }
 
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter((campaign) => campaign.status === statusFilter);
+    if (statusFilter !== "all") {
+      filtered = filtered.filter(
+        (campaign) => campaign.status === statusFilter
+      );
     }
 
     setFilteredCampaigns(filtered);
@@ -64,7 +66,10 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
   }
 
   const formatCurrency = (num: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(num);
   };
 
   return (
@@ -73,10 +78,13 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Campaigns</h1>
-            <p className="text-sm text-gray-500 mt-1">Manage and monitor all your campaigns</p>
+            <p className="text-sm text-gray-500 mt-1">
+              Manage and monitor all your campaigns
+            </p>
           </div>
           <div className="text-sm text-gray-600">
-            <span className="font-semibold">{campaigns.length}</span> total campaigns
+            <span className="font-semibold">{campaigns.length}</span> total
+            campaigns
           </div>
         </div>
       </div>
@@ -142,7 +150,9 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
                     <div className="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">
                       {campaign.name}
                     </div>
-                    <div className="text-xs text-gray-500 mt-0.5">{campaign.id}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">
+                      {campaign.id}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <StatusBadge status={campaign.status} />
@@ -180,9 +190,9 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
             </div>
             <p className="text-gray-900 font-medium mb-1">No campaigns found</p>
             <p className="text-sm text-gray-500">
-              {searchTerm || statusFilter !== 'all'
-                ? 'Try adjusting your search or filters'
-                : 'Get started by creating your first campaign'}
+              {searchTerm || statusFilter !== "all"
+                ? "Try adjusting your search or filters"
+                : "Get started by creating your first campaign"}
             </p>
           </div>
         )}
@@ -191,14 +201,21 @@ export default function Campaigns({ onSelectCampaign }: CampaignsProps) {
       {filteredCampaigns.length > 0 && (
         <div className="mt-4 flex items-center justify-between text-sm">
           <div className="text-gray-600">
-            Showing <span className="font-semibold text-gray-900">{filteredCampaigns.length}</span> of{' '}
-            <span className="font-semibold text-gray-900">{campaigns.length}</span> campaigns
+            Showing{" "}
+            <span className="font-semibold text-gray-900">
+              {filteredCampaigns.length}
+            </span>{" "}
+            of{" "}
+            <span className="font-semibold text-gray-900">
+              {campaigns.length}
+            </span>{" "}
+            campaigns
           </div>
-          {(searchTerm || statusFilter !== 'all') && (
+          {(searchTerm || statusFilter !== "all") && (
             <button
               onClick={() => {
-                setSearchTerm('');
-                setStatusFilter('all');
+                setSearchTerm("");
+                setStatusFilter("all");
               }}
               className="text-blue-600 hover:text-blue-700 font-medium"
             >
